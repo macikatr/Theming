@@ -29,24 +29,31 @@ KV = '''
 
 MDScreen:
     md_bg_color: app.theme_cls.backgroundColor
-    
-    MDIconButton:
-        on_release: app.open_menu(self)
-        pos_hint: {"top": .98}
-        x: "12dp"
-        icon: "menu"
-    # MDBoxLayout:
-    
-    #     size_hint_y: .9
+    MDBoxLayout:
+        size_hint_y: None
+        height: self.minimum_height
+        pos_hint: {'top': 1}
+        MDIconButton:
+            on_release: app.open_menu(self)
+            pos_hint: {"top": .98}
+            x: "12dp"
+            icon: "menu"
+        MDLabel:
+            id: label_color
+            text: "Selected Color"
+            halign: "center"
+            
+            theme_text_color: "Custom"
+            text_color: app.theme_cls.primaryColor
+       
     ScrollView:
         size_hint_y: 0.9
-        # size_hint: (1, None)
-        # size: (root.width, root.height - dp(48))  # Adjust height as needed
-        # pos_hint: {"top": 0.9}
+        
         MDGridLayout:
             cols:3
             id: card_list
-            # orientation: "vertical"
+            size_hint_y: None
+            height: self.minimum_height
             spacing: "16dp"
             padding: "16dp"
 '''
@@ -97,6 +104,7 @@ class Example(MDApp):
 
     def switch_palette(self, selected_palette):
         self.theme_cls.primary_palette = selected_palette
+        self.root.ids.label_color.text = selected_palette
         self.update_scheme_colors()
 
     def switch_theme_style(self):
